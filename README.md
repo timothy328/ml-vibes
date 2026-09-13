@@ -2,6 +2,10 @@
 
 An extensible machine-learning classification project scaffold. The repository is organized to support model development, evaluation, API and batch inference, experimentation, deployment, and governance.
 
+> **Experimentation note:** This repository was coded using GPT 5.6 Luna for
+> experimentation purposes. Review and validate generated code before using it
+> with production data or production services.
+
 ## Project layout
 
 - `main.py` - application entry point
@@ -15,15 +19,42 @@ An extensible machine-learning classification project scaffold. The repository i
 - `tests/` - unit tests
 - `data/`, `model_registry/`, and `monitoring/` - data, model artifacts, and observability resources
 - `deployment/`, `.github/workflows/`, and `governance/` - deployment and operational configuration
-- `Dockerfile`, `docker-compose.yml`, and `.env.example` - planned local/container deployment support
+- `Dockerfile`, `docker-compose.yml`, and `.env.example` - local/container deployment support
 
 ## Getting started
 
 Use [uv](https://docs.astral.sh/uv/) to manage the Python environment and dependencies:
 
 ```bash
+# Use Python 3.14.5 for the project.
+uv python install 3.14.5
+
+# Create the project virtual environment.
+uv venv --python 3.14.5
+
+# Activate it for interactive development.
+source .venv/bin/activate
+
+# Install the project and development dependencies.
 uv sync
 uv run python main.py
+```
+
+On Windows PowerShell, activate the environment with:
+
+```powershell
+.venv\Scripts\Activate.ps1
+```
+
+Run the application with `uv run` (or activate `.venv` first). Running
+`python main.py` directly can use a different system interpreter that does not
+have the project dependencies, including `numpy` and `certifi`. If you want to
+use the active interpreter directly, install the pinned requirements into that
+same environment first:
+
+```bash
+uv pip install --python "$(which python)" -r requirements.txt
+python main.py
 ```
 
 The default command runs preprocessing, logistic-regression training with

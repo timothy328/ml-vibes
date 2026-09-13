@@ -6,7 +6,6 @@ import ssl
 from typing import Any
 from urllib.error import URLError
 
-import certifi
 import numpy as np
 from sklearn.datasets import fetch_california_housing
 
@@ -18,6 +17,13 @@ def load_data() -> tuple[np.ndarray, np.ndarray, list[str]]:
     except URLError:
         # Some local Python installations do not trust the certificate chain
         # used by the sklearn dataset host. Retry with certifi's CA bundle.
+        try:
+            import certifi
+        except ImportError as exc:
+            raise RuntimeError(
+                "certifi is required for the dataset download retry. "
+                "Run `uv sync` and then use `uv run python main.py`."
+            ) from exc
         original_context = ssl._create_default_https_context
         ssl._create_default_https_context = lambda: ssl.create_default_context(
             cafile=certifi.where()
