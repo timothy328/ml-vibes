@@ -1,0 +1,21 @@
+default_model: logistic
+supported_models:
+  - logistic
+  - xgboost
+classification_type: binary
+features:
+  - MedInc
+  - HouseAge
+  - AveRooms
+  - AveBedrms
+  - Population
+  - AveOccup
+  - Latitude
+  - Longitude
+target:
+  name: y_binary
+  dtype: int
+  classes:
+    0: at_or_below_median_house_value
+    1: above_median_house_value
+  derivation: "1 when original target > median(original target), otherwise 0"

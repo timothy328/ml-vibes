@@ -19,11 +19,26 @@ An extensible machine-learning classification project scaffold. The repository i
 
 ## Getting started
 
-This repository currently contains the project structure and blank implementation placeholders. As components are implemented, use [uv](https://docs.astral.sh/uv/) to manage the Python environment and dependencies:
+Use [uv](https://docs.astral.sh/uv/) to manage the Python environment and dependencies:
 
 ```bash
 uv sync
 uv run python main.py
+```
+
+The default command runs preprocessing, logistic-regression training with
+simple tuning, and holdout evaluation:
+
+```bash
+uv run python main.py
+```
+
+Other pipeline examples:
+
+```bash
+uv run python main.py --pipeline preprocess
+uv run python main.py --pipeline train --model xgboost
+uv run python main.py --pipeline train-evaluate --model logistic --random-state 7
 ```
 
 Run the test suite with:

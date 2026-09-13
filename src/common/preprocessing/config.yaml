@@ -1,0 +1,5 @@
+random_state: 42
+train_size: 0.6
+tuning_size: 0.2
+imputer_strategy: median
+scale_features: true

@@ -1,0 +1,7 @@
+certifi==2025.1.31
+fastapi==0.115.6
+numpy==2.2.2
+pydantic==2.10.5
+scikit-learn==1.6.1
+uvicorn[standard]==0.34.0
+xgboost==2.1.3
