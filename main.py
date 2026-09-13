@@ -32,34 +32,44 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     args = parse_args()
 
-    # Step 1 complete: load the California housing data in memory and create
-    # binary above/below-median labels.
+    print("Step 1/4: Loading California housing data...", flush=True)
     X, y, feature_names = load_data()
+    print(
+        f"Step 1/4 complete: loaded {len(y)} samples and "
+        f"{len(feature_names)} features.",
+        flush=True,
+    )
 
-    # Step 2 complete: create deterministic training, tuning, and holdout
-    # partitions. The holdout data remains untouched until evaluation.
+    print("Step 2/4: Creating train, tuning, and holdout splits...", flush=True)
     splits = split_data(X, y, random_state=args.random_state)
     print(
-        f"Preprocessed {len(y)} samples with {len(feature_names)} features. "
-        f"Splits: train={len(splits.y_train)}, "
-        f"tuning={len(splits.y_tuning)}, holdout={len(splits.y_holdout)}."
+        f"Step 2/4 complete: train={len(splits.y_train)}, "
+        f"tuning={len(splits.y_tuning)}, holdout={len(splits.y_holdout)}.",
+        flush=True,
     )
 
     if args.pipeline == "preprocess":
+        print("Preprocessing pipeline complete.", flush=True)
         return
 
-    # Step 3 complete: select simple hyperparameters on the tuning partition
-    # and fit the requested classifier on the training partition.
+    print(
+        f"Step 3/4: Tuning and training the {args.model} model...",
+        flush=True,
+    )
     parameters = choose_parameters(args.model, splits)
     trained_model = train_model(args.model, splits, **parameters)
-    print(f"Trained {args.model} model with parameters: {parameters}.")
+    print(
+        f"Step 3/4 complete: trained {args.model} with parameters "
+        f"{parameters}.",
+        flush=True,
+    )
 
     if args.pipeline == "train-evaluate":
-        # Step 4 complete: evaluate the fitted model once on the holdout
-        # partition and report binary classification metrics.
-        print("Holdout metrics:")
+        print("Step 4/4: Evaluating on the holdout partition...", flush=True)
+        print("Holdout metrics:", flush=True)
         for name, value in evaluate_model(trained_model, splits).items():
-            print(f"  {name}: {value:.4f}")
+            print(f"  {name}: {value:.4f}", flush=True)
+        print("Step 4/4 complete: evaluation finished.", flush=True)
 
 
 if __name__ == "__main__":
